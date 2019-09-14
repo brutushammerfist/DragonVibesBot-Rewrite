@@ -14,6 +14,7 @@ def index():
 @app.route('/toggleOnOff', methods = ['GET', 'POST'])
 def toggle():
     print("Toggle the bot!")
+    return render_template('index.html', title='Home')
     
 @app.route('/twitchWebhook')
 def twitchWebhook():
