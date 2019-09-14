@@ -6,7 +6,7 @@ import os
 import signal
 #from flask_socketio import send, emit
 
-soundSocket = SimpleWebSocketServer('0.0.0.0', 8765, SoundSocket)
+soundSocket = SoundSocket()#SimpleWebSocketServer('0.0.0.0', 8765, SoundSocket)
 
 @app.route('/')
 @app.route('/index')
