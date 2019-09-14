@@ -8,15 +8,6 @@ import requests
 import asyncio
 
 class Bot(commands.Bot):
-    def readJson(self, filename):
-        if os.stat(filename) is not 0:
-            with open(filename, "r") as jsonfile:
-                return json.load(jsonfile)
-        
-    def writeJson(self, filename, info):
-        with open(filename, "w") as jsonfile:
-            json.dump(info, jsonfile)
-    
     # Variables used for scheduling commands to run on certain intervals
     scheduler = AsyncIOScheduler()
     #cmds = {
@@ -37,12 +28,13 @@ class Bot(commands.Bot):
     gaPrice = 0
     
     # Dictionary holding all the "secrets"
-    secrets = readJson("resources/secrets.json")
     
     # List of current channel mods
     modList = ['DracoAsier', 'BrutusHammerfist']
     
     def __init__(self):
+        self.secrets = self.readJson("resources/secrets.json")
+        
         # Connect to twitch
         super().__init__(irc_token=self.secrets['twitchIRCToken'], client_id=self.secrets['twitchClientID'], nick='DragonVibesBot', prefix='!', initial_channels=['DracoAsier'])
         
@@ -84,6 +76,15 @@ class Bot(commands.Bot):
                 await ctx.send(commands[cmd])
         
         await self.handle_commands(message)
+    
+    def readJson(self, filename):
+        if os.stat(filename) is not 0:
+            with open(filename, "r") as jsonfile:
+                return json.load(jsonfile)
+        
+    def writeJson(self, filename, info):
+        with open(filename, "w") as jsonfile:
+            json.dump(info, jsonfile)
         
     def distributeTokens(self):
         viewerTypes = ['vips', 'moderators', 'staff', 'admins', 'global_mods', 'viewers']
