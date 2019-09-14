@@ -11,6 +11,10 @@ soundSocket = SimpleWebSocketServer('0.0.0.0', 8765, SoundSocket)
 def index():
     return render_template('index.html', title='Home')
     
+@app.route('/toggleOnOff')
+def toggle():
+    print("Toggle the bot!")
+    
 @app.route('/twitchWebhook')
 def twitchWebhook():
     return 'I am a placeholder. Watch me hold places.'

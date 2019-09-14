@@ -2,6 +2,11 @@
 
 {% block content %}
     <h1>I am a placeholder. Watch me hold places.</h1>
+    
+    <form method="post" action="/toggleOnOff">
+        <button type="submit" class="button">Toggle On/Off</button>
+    </form>
+    
 <script type="text/javascript">
     var webSocket = new WebSocket('ws://70.161.103.184:8765');
     var reaper = new Audio('http://70.161.103.184/audio/reaper');
@@ -45,5 +50,16 @@
     webSocket.opopen = function (event) {
         console.log("Hello world!");
     };
+    
+    function toggleBot() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.location.reload(true);
+            }
+        };
+        xhttp.open("POST", "/toggleOnOff", true);
+        xhttp.send();
+    }
 </script>
 {% endblock %}
