@@ -1,5 +1,5 @@
 from DragonVibesBot import app
-from Websocket import SoundSocket
+from .Websocket import SoundSocket
 from SimpleWebSocketServer import SimpleWebSocketServer
 from flask import send_file
 #from flask_socketio import send, emit
