@@ -6,7 +6,7 @@ app = Flask(__name__)
 app.config.from_object(Config)
 #socketio = SocketIO(app)
 
-from DragonVibesBot import routes, models
+from DragonVibesBot import routes
 
 #if __name__ == '__main__':
 #    socketio.run(app)
