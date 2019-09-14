@@ -81,6 +81,8 @@ class Bot(commands.Bot):
         if os.stat(filename) is not 0:
             with open(filename, "r") as jsonfile:
                 return json.load(jsonfile)
+        else:
+            return ""
         
     def writeJson(self, filename, info):
         with open(filename, "w") as jsonfile:
