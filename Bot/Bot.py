@@ -33,7 +33,7 @@ class Bot(commands.Bot):
     modList = ['DracoAsier', 'BrutusHammerfist']
     
     def __init__(self):
-        self.secrets = self.readJson("resources/secrets.json")
+        self.secrets = self.readJson("Bot/resources/secrets.json")
         
         # Connect to twitch
         super().__init__(irc_token=self.secrets['twitchIRCToken'], client_id=self.secrets['twitchClientID'], nick='DragonVibesBot', prefix='!', initial_channels=['DracoAsier'])
