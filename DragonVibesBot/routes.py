@@ -11,7 +11,7 @@ soundSocket = SimpleWebSocketServer('0.0.0.0', 8765, SoundSocket)
 def index():
     return render_template('index.html', title='Home')
     
-@app.route('/toggleOnOff')
+@app.route('/toggleOnOff', methods = ['GET', 'POST'])
 def toggle():
     print("Toggle the bot!")
     
