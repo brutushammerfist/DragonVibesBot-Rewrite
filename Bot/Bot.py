@@ -28,7 +28,7 @@ class Bot(commands.Bot):
     gaPrice = 0
     
     # Dictionary holding all the "secrets"
-    secrets = readJson("resources/secrets.json")
+    secrets = self.readJson("resources/secrets.json")
     
     # List of current channel mods
     modList = ['DracoAsier', 'BrutusHammerfist']
