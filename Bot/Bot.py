@@ -8,6 +8,15 @@ import requests
 import asyncio
 
 class Bot(commands.Bot):
+    def readJson(self, filename):
+        if os.stat(filename) is not 0:
+            with open(filename, "r") as jsonfile:
+                return json.load(jsonfile)
+        
+    def writeJson(self, filename, info):
+        with open(filename, "w") as jsonfile:
+            json.dump(info, jsonfile)
+    
     # Variables used for scheduling commands to run on certain intervals
     scheduler = AsyncIOScheduler()
     #cmds = {
@@ -28,7 +37,7 @@ class Bot(commands.Bot):
     gaPrice = 0
     
     # Dictionary holding all the "secrets"
-    secrets = self.readJson("resources/secrets.json")
+    secrets = readJson("resources/secrets.json")
     
     # List of current channel mods
     modList = ['DracoAsier', 'BrutusHammerfist']
@@ -101,15 +110,6 @@ class Bot(commands.Bot):
         
         for viewerType in viewerTypes:
             checkAndDist(bank, checkOnline, viewerType)
-    
-    def readJson(self, filename):
-        if os.stat(filename) is not 0:
-            with open(filename, "r") as jsonfile:
-                return json.load(jsonfile)
-        
-    def writeJson(self, filename, info):
-        with open(filename, "w") as jsonfile:
-            json.dump(info, jsonfile)
     
     @commands.command(name='test')
     async def testCommand(self, ctx):
