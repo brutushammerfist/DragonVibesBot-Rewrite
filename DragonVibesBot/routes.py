@@ -1,7 +1,7 @@
 from DragonVibesBot import app
 from .Websocket import SoundSocket
 from SimpleWebSocketServer import SimpleWebSocketServer
-from flask import send_file
+from flask import send_file, render_template
 #from flask_socketio import send, emit
 
 soundSocket = SimpleWebSocketServer('0.0.0.0', 8765, SoundSocket)
@@ -9,7 +9,7 @@ soundSocket = SimpleWebSocketServer('0.0.0.0', 8765, SoundSocket)
 @app.route('/')
 @app.route('/index')
 def index():
-    return 'I am a placeholder. Watch me hold places.'
+    return render_template('index.html', title='Home')
     
 @app.route('/twitchWebhook')
 def twitchWebhook():
