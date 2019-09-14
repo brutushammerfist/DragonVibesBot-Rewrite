@@ -242,7 +242,7 @@ class Bot(commands.Bot):
     #*
     @commands.command(name='reaper')
     async def reaperCommand(self, ctx):
-        r = requests.get("70.161.103.184/sounds/reaper")
+        r = requests.get("http://70.161.103.184/sounds/reaper")
         
     @commands.command(name='ghost')
     async def ghostCommand(self, ctx):
