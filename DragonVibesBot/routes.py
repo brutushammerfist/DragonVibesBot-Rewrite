@@ -1,4 +1,4 @@
-from app import app
+from DragonVibesBot import app
 from Websocket import SoundSocket
 from SimpleWebSocketServer import SimpleWebSocketServer
 from flask import send_file
