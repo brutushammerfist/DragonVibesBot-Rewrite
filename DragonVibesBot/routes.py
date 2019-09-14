@@ -2,6 +2,8 @@ from DragonVibesBot import app
 from .Websocket import SoundSocket
 from SimpleWebSocketServer import SimpleWebSocketServer
 from flask import send_file, render_template
+import os
+import signal
 #from flask_socketio import send, emit
 
 soundSocket = SimpleWebSocketServer('0.0.0.0', 8765, SoundSocket)
