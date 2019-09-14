@@ -4,9 +4,18 @@ from SimpleWebSocketServer import SimpleWebSocketServer
 from flask import send_file, render_template
 import os
 import signal
+import threading
 #from flask_socketio import send, emit
 
 soundSocket = SimpleWebSocketServer('0.0.0.0', 8765, SoundSocket)
+socketThread = threading.Thread(target=soundSocket.serveforever)
+socketThread.start()
+
+reapThread = None
+ghostThread = None
+seaThread = None
+teleporterThread = None
+roarThread = None
 
 @app.route('/')
 @app.route('/index')
@@ -30,7 +39,8 @@ def twitchWebhook():
     
 @app.route('/sounds/reaper')
 def soundsReaper():
-    soundSocket.sendSound("reaper")
+    reapThread = threading.Thread(target=SoundSocket.sendSound, args=(soundSocket.websocketclass, "reaper", ))
+    reapThread.start()
     
 @app.route('/sounds/ghost')
 def soundsGhost():
