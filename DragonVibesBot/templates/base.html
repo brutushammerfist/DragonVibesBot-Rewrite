@@ -1,0 +1,13 @@
+<html>
+    <head>
+        {% if title %}
+        <title>{{ title }} - DragonVibesBot</title>
+        {% else %}
+        <title>DragonVibesBot</title>
+    </head>
+    <body>
+        <div>DragonVibesBot: <a href="/index">Home</a></div>
+        <hr>
+        {% block content %}{% endblock %}
+    </body>
+</html>
