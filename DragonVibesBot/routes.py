@@ -21,7 +21,7 @@ def toggle():
             pid = tmpFile.read()
             os.kill(int(pid), signal.SIGTERM)
     else:
-        os.system('pwd')
+        os.system('python3 Bot/Bot.py')
     return render_template('index.html', title='Home')
     
 @app.route('/twitchWebhook')
