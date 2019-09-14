@@ -52,8 +52,8 @@ class Bot(commands.Bot):
         print(message.author.name + " : " + message.content)
         
         #Check message for blacklisted words
-        if os.stat("resources/blacklist.csv") is not 0:
-            with open("resources/blacklist.csv") as blacklistFile:
+        if os.stat("Bot/resources/blacklist.csv") is not 0:
+            with open("Bot/resources/blacklist.csv") as blacklistFile:
                 blacklist = blacklistFile.read()
             for word in blacklist:
                 if word in message.content.split(" "):
@@ -65,7 +65,7 @@ class Bot(commands.Bot):
                     
         #Check if command is user defined or not
         if message.content[0] is '!':
-            commands = self.readJson("resources/commands.json")
+            commands = self.readJson("Bot/resources/commands.json")
             cmd = (message.content[1:].split(" ", 1))[0]
             
             if cmd in commands:
@@ -90,7 +90,7 @@ class Bot(commands.Bot):
         viewerTypes = ['vips', 'moderators', 'staff', 'admins', 'global_mods', 'viewers']
         chatters = requests.get('https://tmi.twitch.tv/group/user/dracoasier/chatters').json()
         checkOnline = requests.get(f'https://api.twitch.tv/helix/streams?user_login=DracoAsier', headers={'Client-ID' : f'{self.twitchClientID}'})
-        bank = self.readJson("resources/bank.json")
+        bank = self.readJson("Bot/resources/bank.json")
         
         def checkAndDist(bank, checkOnline, viewerType):
             for viewer in chatters['chatters'][viewerType]:
@@ -121,7 +121,7 @@ class Bot(commands.Bot):
     #*
     @commands.command(name='addcom')
     async def addCommand(self, ctx):
-        commands = self.readJson("resources/commands.json")
+        commands = self.readJson("Bot/resources/commands.json")
         cmd = ctx.content[8:]
         params = cmd.split(" ", 1)
         
@@ -129,17 +129,17 @@ class Bot(commands.Bot):
             await ctx.send(f'This command already exists, please remove and readd it to edit!')
         else:
             commands[params[0]] = params[1]
-            self.writeJson("resources/commands.json", commands)
+            self.writeJson("Botresources/commands.json", commands)
             await ctx.send(f'Command {params[0]} has been created!')
         
     @commands.command(name='delcom')
     async def delCommand(self, ctx):
-        commands = self.readJson("resources/commands.json")
+        commands = self.readJson("Bot/resources/commands.json")
         cmd = ctx.content[8:]
         
         if cmd in commands:
             commands.pop(cmd)
-            self.writeJson("resources/commands.json", commands)
+            self.writeJson("Bot/resources/commands.json", commands)
             await ctx.send(f'Command {cmd} has been removed!')
         else:
             await ctx.send(f'There is no command by that name, try again.')
@@ -158,7 +158,7 @@ class Bot(commands.Bot):
     #*
     @commands.command(name='coins')
     async def coinsCommand(self, ctx):
-        bank = self.readJson("resources/bank.json")
+        bank = self.readJson("Bot/resources/bank.json")
         if ctx.author.name in bank:
             await ctx.send(f'You have collected {bank[ctx.author.name]} loyalty points!')
         else:
@@ -166,7 +166,7 @@ class Bot(commands.Bot):
         
     @commands.command(name='givecoins')
     async def giveCoinsCommand(self, ctx):
-        bank = self.readJson("resources/bank.json")
+        bank = self.readJson("Bot/resources/bank.json")
         params = ctx.content[11:].split(" ")
         
         if params[0] in bank:
@@ -198,12 +198,12 @@ class Bot(commands.Bot):
         if ctx.author.name in self.gaPool:
             pass
         else:
-            bank = self.readJson("resources/bank.json")
+            bank = self.readJson("Bot/resources/bank.json")
             if ctx.author.name in bank:
                 if bank[ctx.author.name] >= self.gaPrice:
                     bank[ctx.author.name] -= self.gaPrice
                     self.gaPool.append(ctx.author.name)
-                    self.writeJson("resources/bank.json", bank)
+                    self.writeJson("Bot/resources/bank.json", bank)
         
     @commands.command(name='gapull')
     async def gaPullCommand(self, ctx):
