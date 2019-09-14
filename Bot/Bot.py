@@ -285,11 +285,11 @@ class Bot(commands.Bot):
     async def artistCommand(self, ctx):
         pass
 
-try:
-    print("Bot starting...")
-    bot = Bot()
-    bot.run()
-except:
-    pass
-finally:
-    os.remove("/tmp/dragonvibesbot.pid")
+#try:
+print("Bot starting...")
+bot = Bot()
+bot.run()
+#except:
+#    pass
+#finally:
+    #os.remove("/tmp/dragonvibesbot.pid")
