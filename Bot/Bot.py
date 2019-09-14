@@ -10,12 +10,12 @@ import asyncio
 class Bot(commands.Bot):
     # Variables used for scheduling commands to run on certain intervals
     scheduler = AsyncIOScheduler()
-    cmds = {
-        'prime' : primeCommand._callback,
-        'uptime' : uptimeCommand._callback,
-        'artist' : artistCommand._callback,
-        'tweet' : tweetCommand._callback
-    }
+    #cmds = {
+    #    'prime' : primeCommand._callback,
+    #    'uptime' : uptimeCommand._callback,
+    #    'artist' : artistCommand._callback,
+    #    'tweet' : tweetCommand._callback
+    #}
     
     # Variable used to tell if the loyalty bank is "open"
     bankOpen = 0
