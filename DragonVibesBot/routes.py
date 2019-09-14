@@ -14,6 +14,12 @@ def index():
 @app.route('/toggleOnOff', methods = ['GET', 'POST'])
 def toggle():
     print("Toggle the bot!")
+    if os.path.isfile("/tmp/dragonvibesbot.pid"):
+        with open("/tmp/dragonvibesbot.pid", 'r') as tmpFile:
+            pid = tmpFile.read()
+            os.kill(int(pid), signal.SIGTERM)
+    else:
+        os.system('python3 ../Bot/Bot.py')
     return render_template('index.html', title='Home')
     
 @app.route('/twitchWebhook')
