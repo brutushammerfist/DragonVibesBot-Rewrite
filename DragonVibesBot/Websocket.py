@@ -2,7 +2,7 @@ from SimpleWebSocketServer import SimpleWebSocketServer, WebSocket
 
 class SoundSocket(WebSocket):
     
-    client = None
+    clients = []
     
     def handleMessage(self):
         pass
