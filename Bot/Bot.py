@@ -6,6 +6,7 @@ import datetime
 import os
 import json
 import requests
+import twitter
 import asyncio
 
 class Bot(commands.Bot):
@@ -29,12 +30,21 @@ class Bot(commands.Bot):
     gaPrice = 0
     
     # Dictionary holding all the "secrets"
+    secrets = []
     
     # List of current channel mods
     modList = ['DracoAsier', 'BrutusHammerfist']
     
+    tweetAPI = None
+    
     def __init__(self):
         self.secrets = self.readJson("Bot/resources/secrets.json")
+        
+        self.tweetAPI = twitter.Api(consumer_key=tweetConsumerKey,
+            consumer_secret=tweetConsumerSecret,
+            access_token_key=tweetAccessTokenKey,
+            access_token_secret=tweetAccessTokenSecret
+        )
         
         # Connect to twitch
         super().__init__(irc_token=self.secrets['twitchIRCToken'], client_id=self.secrets['twitchClientID'], nick='DragonVibesBot', prefix='!', initial_channels=['DracoAsier'])
@@ -282,13 +292,14 @@ class Bot(commands.Bot):
         plistURL = "https://www.youtube.com/playlist?list="
         
         r = requests.get(str(self.secrets['ytBaseURL'] + "/search?part=snippet&channelId=" + self.secrets['ytChannelID'] + "&type=playlist&q=" + plistName + "&key=" + self.secrets['ytAPI'])).json()
+        print(r)
         plistURL = plistURL + str(r['items'][0]['id']['playlistId'])
         
         await ctx.send(f'Here is the playlist you requested: {plistName} - {plistURL}')
         
     @commands.command(name='tweet')
     async def tweetCommand(self, ctx):
-        r = tweetAPI.GetUserTimeline(screen_name="DracoAsier", count=20, include_rts=False)[0].AsDict()
+        r = self.tweetAPI.GetUserTimeline(screen_name="DracoAsier", count=20, include_rts=False)[0].AsDict()
         
         await ctx.send(str("Here is a link to DracoAsier\'s latest tweet: " + r['urls'][0]['expanded_url']))
 
