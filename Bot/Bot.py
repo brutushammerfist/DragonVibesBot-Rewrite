@@ -2,6 +2,7 @@ from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from random import randrange
 from twitchio.ext import commands
 from twitchio import *
+import datetime
 import os
 import json
 import requests
@@ -246,52 +247,56 @@ class Bot(commands.Bot):
         
     @commands.command(name='ghost')
     async def ghostCommand(self, ctx):
-        pass
+        r = requests.get("http://70.161.103.184/sounds/ghost")
         
     @commands.command(name='sea')
     async def seaCommand(self, ctx):
-        pass
+       r = requests.get("http://70.161.103.184/sounds/sea")
         
     @commands.command(name='teleporter')
     async def teleporterCommand(self, ctx):
-        pass
+        r = requests.get("http://70.161.103.184/sounds/teleporter")
         
     @commands.command(name='roar')
     async def roarCommand(self, ctx):
-        pass
+        r = requests.get("http://70.161.103.184/sounds/roar")
     
     #**
     #   Misc. Commands
     #*
     @commands.command(name='uptime')
     async def uptimeCommand(self, ctx):
-        pass
+        r = requests.get(f'https://api.twitch.tv/helix/streams?user_login=DracoAsier', headers={'Client-ID': str(self.secrets['twitchClientID'])}).json()
+        
+        if len(r['data']) == 0:
+            await ctx.send("Stream is currently offline.")
+        else:
+            startTime = datetime.datetime.strptime(r['data'][0]['started_at'], '%Y-%m-%dT%H:%M:%SZ')
+            currTime = datetime.datetime.now()
+            timeLive = str(currTime - startTime).split(':')
+            await ctx.send(f'The Dragon has been live for {timeLive[0]} hours {timeLive[1]} minutes {int(float(timeLive[2]))} seconds!')
     
     @commands.command(name='youtube')
     async def youtubeCommand(self, ctx):
-        pass
+        plistName = ctx.content[9:]
+        plistURL = "https://www.youtube.com/playlist?list="
+        
+        r = requests.get(str(self.secrets['ytBaseURL'] + "/search?part=snippet&channelId=" + self.secrets['ytChannelID'] + "&type=playlist&q=" + plistName + "&key=" + self.secrets['ytAPI'])).json()
+        plistURL = plistURL + str(r['items'][0]['id']['playlistId'])
+        
+        await ctx.send(f'Here is the playlist you requested: {plistName} - {plistURL}')
         
     @commands.command(name='tweet')
     async def tweetCommand(self, ctx):
-        pass
+        r = tweetAPI.GetUserTimeline(screen_name="DracoAsier", count=20, include_rts=False)[0].AsDict()
         
-        
-    #**
-    #   These could really be in the user-defined cmd json file.
-    #*
-    @commands.command(name='prime')
-    async def primeCommand(self, ctx):
-        pass
-        
-    @commands.command(name='artist')
-    async def artistCommand(self, ctx):
-        pass
+        await ctx.send(str("Here is a link to DracoAsier\'s latest tweet: " + r['urls'][0]['expanded_url']))
 
-#try:
-print("Bot starting...")
-bot = Bot()
-bot.run()
-#except:
-#    pass
-#finally:
-    #os.remove("/tmp/dragonvibesbot.pid")
+try:
+    print("Bot starting...")
+    bot = Bot()
+    bot.run()
+except:
+    pass
+finally:
+    os.remove("/tmp/dragonvibesbot.pid")

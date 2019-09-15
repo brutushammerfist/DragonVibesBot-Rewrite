@@ -5,7 +5,6 @@ from flask import send_file, render_template
 import os
 import signal
 import threading
-#from flask_socketio import send, emit
 
 soundSocket = SimpleWebSocketServer('0.0.0.0', 8765, SoundSocket)
 socketThread = threading.Thread(target=soundSocket.serveforever)
@@ -44,24 +43,40 @@ def soundsReaper():
     
 @app.route('/sounds/ghost')
 def soundsGhost():
-    soundSocket.sendSound("ghost")
+    ghostThread = threading.Thread(target=SoundSocket.sendSound, args=(soundSocket.websocketclass, "ghost", ))
+    ghostThread.start()
     
 @app.route('/sounds/sea')
 def soundsSea():
-    soundSocket.sendSound("sea")
+    seaThread = threading.Thread(target=SoundSocket.sendSound, args=(soundSocket.websocketclass, "sea", ))
+    seaThread.start()
     
 @app.route('/sounds/teleporter')
 def soundsTeleporter():
-    soundSocket.sendSound("teleporter")
+    teleporterThread = threading.Thread(target=SoundSocket.sendSound, args=(soundSocket.websocketclass, "teleporter", ))
+    teleporterThread.start()
     
 @app.route('/sounds/roar')
 def soundsRoar():
-    soundSocket.sendSound("roar")
+    roarThread = threading.Thread(target=SoundSocket.sendSound, args=(soundSocket.websocketclass, "roar", ))
+    roarThread.start()
     
 @app.route('/audio/reaper')
 def audioReaper():
     return send_file("audio/reaper.mp3", mimetype="audio/mpeg", as_attachment=True, attachment_filename="reaper.mp3")
     
-#@socketio.on('message')
-#def handle_message(message):
-#    print('received message: ' + message)
+@app.route('/audio/ghost')
+def audioGhost():
+    return send_file("audio/ghost.mp3", mimetype="audio/mpeg", as_attachment=True, attachment_filename="ghost.mp3")
+    
+@app.route('/audio/sea')
+def audioSea():
+    return send_file("audio/sea.mp3", mimetype="audio/mpeg", as_attachment=True, attachment_filename="sea.mp3")
+    
+@app.route('/audio/teleporter')
+def audioTeleporter():
+    return send_file("audio/teleporter.mp3", mimetype="audio/mpeg", as_attachment=True, attachment_filename="teleporter.mp3")
+    
+@app.route('/audio/roar')
+def audioRoar():
+    return send_file("audio/roar.mp3", mimetype="audio/mpeg", as_attachment=True, attachment_filename="roar.mp3")
