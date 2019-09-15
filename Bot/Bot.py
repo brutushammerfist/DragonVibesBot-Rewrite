@@ -303,9 +303,7 @@ class Bot(commands.Bot):
         
         await ctx.send(str("Here is a link to DracoAsier\'s latest tweet: " + r['urls'][0]['expanded_url']))
 
-try:
+if __name__ == "__main__":
     print("Bot starting...")
     bot = Bot()
     bot.run()
-finally:
-    os.remove("/tmp/dragonvibesbot.pid")

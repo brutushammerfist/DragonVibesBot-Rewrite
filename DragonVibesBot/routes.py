@@ -28,6 +28,7 @@ def toggle():
         with open("/tmp/dragonvibesbot.pid", 'r') as tmpFile:
             pid = tmpFile.read()
             os.kill(int(pid), signal.SIGTERM)
+        os.remove("/tmp/dragonvibesbot.pid")
     else:
         os.system('gnome-terminal -x python3 Bot/Bot.py')
     return render_template('index.html', title='Home')
