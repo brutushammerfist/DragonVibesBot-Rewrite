@@ -307,7 +307,5 @@ try:
     print("Bot starting...")
     bot = Bot()
     bot.run()
-except:
-    pass
 finally:
     os.remove("/tmp/dragonvibesbot.pid")
