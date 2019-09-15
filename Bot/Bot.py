@@ -40,10 +40,10 @@ class Bot(commands.Bot):
     def __init__(self):
         self.secrets = self.readJson("Bot/resources/secrets.json")
         
-        self.tweetAPI = twitter.Api(consumer_key=tweetConsumerKey,
-            consumer_secret=tweetConsumerSecret,
-            access_token_key=tweetAccessTokenKey,
-            access_token_secret=tweetAccessTokenSecret
+        self.tweetAPI = twitter.Api(consumer_key=self.secrets['tweetConsumerKey'],
+            consumer_secret=self.secrets['tweetConsumerSecret'],
+            access_token_key=self.secrets['tweetAccessTokenKey'],
+            access_token_secret=self.secrets['tweetAccessTokenSecret']
         )
         
         # Connect to twitch
