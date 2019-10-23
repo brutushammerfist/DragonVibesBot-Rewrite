@@ -109,7 +109,7 @@ class Bot(commands.Bot):
             for viewer in chatters['chatters'][viewerType]:
                 if len(checkOnline['data']) != 0:
                     if viewer in bank:
-                        bank[viewer] +=1
+                        bank[viewer] += 1
                     else:
                         bank[viewer] = 1
                 else:
@@ -302,6 +302,19 @@ class Bot(commands.Bot):
         r = self.tweetAPI.GetUserTimeline(screen_name="DracoAsier", count=20, include_rts=False)[0].AsDict()
         
         await ctx.send(str("Here is a link to DracoAsier\'s latest tweet: " + r['urls'][0]['expanded_url']))
+        
+    @commands.command(name='dvcannon')
+    async def dvCannonCommand(self, ctx):
+        params = ctx.content[10:]
+        
+        if params is not "":
+            await ctx.send(f'Locking onto {params}...Cannon loaded, firing in 10 seconds!!')
+            time.sleep(10)
+            await ctx.send(f'dracoaDV https://i.imgur.com/IU3fBKw.gif FIRE!!')
+        else:
+            await ctx.send(f'Cannon loaded, firing in 10 seconds!!')
+            time.sleep(10)
+            await ctx.send(f'dracoaDV https://i.imgur.com/IU3fBKw.gif FIRE!!')
 
 if __name__ == "__main__":
     print("Bot starting...")
