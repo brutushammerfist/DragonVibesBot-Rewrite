@@ -8,6 +8,7 @@ import json
 import requests
 import twitter
 import asyncio
+import time
 
 class Bot(commands.Bot):
     # Variables used for scheduling commands to run on certain intervals
