@@ -317,7 +317,7 @@ class Bot(commands.Bot):
             time.sleep(10)
             await ctx.send(f'dracoaDV https://i.imgur.com/IU3fBKw.gif FIRE!!')
 
-if __name__ == "__main__":
-    print("Bot starting...")
-    bot = Bot()
-    bot.run()
+#if __name__ == "__main__":
+#    print("Bot starting...")
+#    bot = Bot()
+#    bot.run()

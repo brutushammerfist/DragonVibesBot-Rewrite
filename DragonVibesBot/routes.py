@@ -5,6 +5,7 @@ from flask import send_file, render_template
 import os
 import signal
 import threading
+import Bot
 
 soundSocket = SimpleWebSocketServer('0.0.0.0', 8765, SoundSocket)
 socketThread = threading.Thread(target=soundSocket.serveforever)
@@ -16,6 +17,9 @@ seaThread = None
 teleporterThread = None
 roarThread = None
 
+bot = Bot()
+botThread = None
+
 @app.route('/')
 @app.route('/index')
 def index():
@@ -24,13 +28,22 @@ def index():
 @app.route('/toggleOnOff', methods = ['GET', 'POST'])
 def toggle():
     print("Toggle the bot!")
-    if os.path.isfile("/tmp/dragonvibesbot.pid"):
-        with open("/tmp/dragonvibesbot.pid", 'r') as tmpFile:
-            pid = tmpFile.read()
-            os.kill(int(pid), signal.SIGTERM)
-        os.remove("/tmp/dragonvibesbot.pid")
+    #if os.path.isfile("/tmp/dragonvibesbot.pid"):
+    #    with open("/tmp/dragonvibesbot.pid", 'r') as tmpFile:
+    #        pid = tmpFile.read()
+    #        os.kill(int(pid), signal.SIGTERM)
+    #    os.remove("/tmp/dragonvibesbot.pid")
+    #else:
+    #    os.system('gnome-terminal -x python3 Bot/Bot.py')
+    
+    if botThread.isAlive():
+        print("Bot Stopping!")
+        botThread.join()
     else:
-        os.system('gnome-terminal -x python3 Bot/Bot.py')
+        print("Bot Starting!")
+        botThread = threading.Thread(target=bot.run)
+        botThread.start()
+    
     return render_template('index.html', title='Home')
     
 @app.route('/twitchWebhook')
