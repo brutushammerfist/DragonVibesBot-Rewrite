@@ -9,6 +9,7 @@ import requests
 import twitter
 import asyncio
 import time
+import threading
 
 class Bot(commands.Bot):
     # Variables used for scheduling commands to run on certain intervals
@@ -316,6 +317,26 @@ class Bot(commands.Bot):
             await ctx.send(f'Cannon loaded, firing in 10 seconds!!')
             time.sleep(10)
             await ctx.send(f'dracoaDV https://i.imgur.com/IU3fBKw.gif FIRE!!')
+
+    #On/Off switch to leave and join channel
+    async def toggle(self, botStatus):
+        if botStatus:
+            print(botStatus)
+            print("Parting!!")
+            await self.part_channels(["DracoAsier"])
+        else:
+            print(botStatus)
+            print("Joining!!")
+            await self.join_channels(["DracoAsier"])
+
+    async def join(self):
+        await self.join_channels(["DracoAsier"])
+
+    async def part(self):
+        await self.part_channels(["DracoAsier"])
+
+    def bruh(self):
+        print("BRUH!")
 
 #if __name__ == "__main__":
 #    print("Bot starting...")
