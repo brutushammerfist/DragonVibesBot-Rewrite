@@ -73,30 +73,35 @@ def twitchWebhook():
 def soundsReaper():
     reapThread = threading.Thread(target=SoundSocket.sendSound, args=(soundSocket.websocketclass, "reaper", ))
     reapThread.start()
+    return ("OK", 200, )
     
 @app.route('/sounds/ghost')
 def soundsGhost():
     ghostThread = threading.Thread(target=SoundSocket.sendSound, args=(soundSocket.websocketclass, "ghost", ))
     ghostThread.start()
+    return ("OK", 200, )
     
 @app.route('/sounds/sea')
 def soundsSea():
     seaThread = threading.Thread(target=SoundSocket.sendSound, args=(soundSocket.websocketclass, "sea", ))
     seaThread.start()
+    return ("OK", 200, )
     
 @app.route('/sounds/teleporter')
 def soundsTeleporter():
     teleporterThread = threading.Thread(target=SoundSocket.sendSound, args=(soundSocket.websocketclass, "teleporter", ))
     teleporterThread.start()
+    return ("OK", 200, )
     
 @app.route('/sounds/roar')
 def soundsRoar():
     roarThread = threading.Thread(target=SoundSocket.sendSound, args=(soundSocket.websocketclass, "roar", ))
     roarThread.start()
+    return ("OK", 200, )
     
-#@app.route('/audio/reaper')
-#def audioReaper():
-    #return send_file("audio/reaper.mp3", mimetype="audio/mpeg", as_attachment=True, attachment_filename="reaper.mp3")
+@app.route('/audio/reaper')
+def audioReaper():
+    return send_file("audio/reaper.mp3", mimetype="audio/mpeg", as_attachment=True, attachment_filename="reaper.mp3")
     
 #@app.route('/audio/ghost')
 #def audioGhost():

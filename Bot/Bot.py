@@ -2,6 +2,7 @@ from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from random import randrange
 from twitchio.ext import commands
 from twitchio import *
+from bs4 import BeautifulSoup
 import datetime
 import os
 import json
@@ -10,6 +11,19 @@ import twitter
 import asyncio
 import time
 import threading
+import socket
+
+r = requests.get("http://whatismyip.org")
+
+soup = BeautifulSoup(r.content, 'html.parser')
+
+curr_ip = "0.0.0.0"
+
+for link in soup.find_all('a'):
+    if link.get('href') == '/my-ip-address':
+        curr_ip = link.getText()
+
+print(curr_ip)
 
 class Bot(commands.Bot):
     # Variables used for scheduling commands to run on certain intervals
@@ -255,23 +269,23 @@ class Bot(commands.Bot):
     #*
     @commands.command(name='reaper')
     async def reaperCommand(self, ctx):
-        r = requests.get("http://70.161.103.184/sounds/reaper")
+        r = requests.get(f"http://{curr_ip}/sounds/reaper")
         
     @commands.command(name='ghost')
     async def ghostCommand(self, ctx):
-        r = requests.get("http://70.161.103.184/sounds/ghost")
+        r = requests.get(f"http://{curr_ip}/sounds/ghost")
         
     @commands.command(name='sea')
     async def seaCommand(self, ctx):
-       r = requests.get("http://70.161.103.184/sounds/sea")
+        r = requests.get(f"http://{curr_ip}/sounds/sea")
         
     @commands.command(name='teleporter')
     async def teleporterCommand(self, ctx):
-        r = requests.get("http://70.161.103.184/sounds/teleporter")
+        r = requests.get(f"http://{curr_ip}/sounds/teleporter")
         
     @commands.command(name='roar')
     async def roarCommand(self, ctx):
-        r = requests.get("http://70.161.103.184/sounds/roar")
+        r = requests.get(f"http://{curr_ip}/sounds/roar")
     
     #**
     #   Misc. Commands
